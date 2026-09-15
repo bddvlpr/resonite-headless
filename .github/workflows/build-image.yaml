@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Get current build ID
-        step: build
+        id: build
         run: |
           BUILD_ID=$(
             curl --fail --silent --show-error --retry 3 \
