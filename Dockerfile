@@ -34,6 +34,12 @@ RUN curl -SsL "https://github.com/resonite-modding-group/ResoniteModLoader/relea
   -o "Libraries/ResoniteModLoader.dll"
 RUN curl -SsL "https://github.com/New-Project-Final-Final-WIP/HeadlessTweaks/releases/latest/download/HeadlessTweaks.dll" \
   -o "rml_mods/HeadlessTweaks.dll"
+RUN curl -SsL "https://github.com/New-Project-Final-Final-WIP/HeadlessTweaks/releases/latest/download/Discord.Net.Core.dll" \
+  -o "rml_libs/Discord.Net.Core.dll"
+RUN curl -SsL "https://github.com/New-Project-Final-Final-WIP/HeadlessTweaks/releases/latest/download/Discord.Net.Rest.dll" \
+  -o "rml_libs/Discord.Net.Rest.dll"
+RUN curl -SsL "https://github.com/New-Project-Final-Final-WIP/HeadlessTweaks/releases/latest/download/Discord.Net.Webhook.dll" \
+  -o "rml_libs/Discord.Net.Webhook.dll"
 RUN curl -SsL "https://codeberg.org/Raidriar/StresslessHeadless/releases/download/latest/StresslessHeadless.dll" \
   -o "rml_mods/StresslessHeadless.dll"
 RUN curl -SsL "https://github.com/bddvlpr/ResoniteAgones/releases/latest/download/ResoniteAgones.Merged.dll" \
