@@ -39,3 +39,7 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/resonite-headless:latest
             ghcr.io/${{ github.repository_owner }}/resonite-headless:${{ steps.build.outputs.build_id }}
+          secrets:
+            steam_username=${{ secrets.STEAM_USERNAME }}
+            steam_password=${{ secrets.STEAM_PASSWORD }}
+            steam_branch_password=${{ secrets.STEAM_BRANCH_PASSWORD }}
