@@ -29,10 +29,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Check if current build is packaged
-        id: check
-        env:
-          BUILD_ID: ${{ steps.}}
       - uses: docker/setup-buildx-action@v4
       - uses: docker/build-push-action@v7
         with:
