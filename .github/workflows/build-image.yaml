@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 permissions:
-  actions: write
-  packages: read
+  contents: read
+  packages: write
 
 jobs:
   build:
