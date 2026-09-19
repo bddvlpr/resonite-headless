@@ -1,7 +1,14 @@
 name: Check Public Build
 on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/check-public-build.yaml'
+      - '.github/workflows/build-image.yaml'
+      - '.github/scripts/image-exists.sh'
   schedule:
-    - cron: '7,22,37,52 * * * *'
+    - cron: '17 * * * *'
 
 permissions:
   actions: write
