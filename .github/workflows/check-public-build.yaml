@@ -1,0 +1,37 @@
+name: Check Public Build
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+
+permissions:
+  actions: write
+  contents: read
+  packages: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check public build and trigger image build
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          build_id=$(
+            curl --fail --silent --show-error --retry 3 \
+              'https://api.steamcmd.net/v1/info/2519830' |
+            jq -er '.data["2519830"].depots.branches["public"].buildid'
+          )
+          [[ "$build_id" =~ ^[0-9]+$ ]] || {
+            echo "Invalid public build ID: $build_id" >&2
+            exit 1
+          }
+          exists=$(bash .github/scripts/image-exists.sh "$build_id")
+          if [[ "$exists" == false ]]; then
+            echo "New public build $build_id; starting image build"
+            gh workflow run build-image.yaml --repo "$GITHUB_REPOSITORY" --ref "$GITHUB_REF_NAME"
+          else
+            echo "Build $build_id is already published"
+          fi
