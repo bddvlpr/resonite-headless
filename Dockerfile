@@ -37,4 +37,8 @@ RUN curl -SsL "https://codeberg.org/Raidriar/StresslessHeadless/releases/downloa
 RUN curl -SsL "https://github.com/bddvlpr/ResoniteAgones/releases/latest/download/ResoniteAgones.Merged.dll" \
   -o "rml_mods/ResoniteAgones.Merged.dll"
 
-ENTRYPOINT ["dotnet", "Resonite.dll", "-LoadAssembly", "Libraries/ResoniteModLoader.dll", "-HeadlessConfig", "/config.json"]
+COPY entrypoint.sh entrypoint.sh
+
+STOPSIGNAL SIGINT
+
+ENTRYPOINT ["./entrypoint.sh"]
