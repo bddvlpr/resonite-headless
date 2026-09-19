@@ -1,4 +1,4 @@
-FROM steamcmd/steamcmd:debian AS download-stage
+FROM --platform=linux/amd64 steamcmd/steamcmd:debian AS download-stage
 
 RUN --mount=type=secret,id=steam_username,env=STEAM_USERNAME,required=true \
   --mount=type=secret,id=steam_password,env=STEAM_PASSWORD,required=true \
