@@ -11,18 +11,22 @@ registry_token=$(
     'https://ghcr.io/token' |
   jq -er '.token'
 )
-status=$(
+exists=true
+for tag in "$build_id" "agones-$build_id"; do
+  status=$(
   curl --silent --show-error --retry 3 --head \
     --output /dev/null --write-out '%{http_code}' \
     --header "Authorization: Bearer $registry_token" \
     --header 'Accept: application/vnd.oci.image.index.v1+json, application/vnd.docker.distribution.manifest.list.v2+json, application/vnd.oci.image.manifest.v1+json, application/vnd.docker.distribution.manifest.v2+json' \
-    "https://ghcr.io/v2/$image_name/manifests/$build_id"
-)
-case "$status" in
-  200) echo true ;;
-  404) echo false ;;
+    "https://ghcr.io/v2/$image_name/manifests/$tag"
+  )
+  case "$status" in
+  200) ;;
+  404) exists=false ;;
   *)
-    echo "GHCR manifest check failed with HTTP $status" >&2
+    echo "GHCR manifest check for $tag failed with HTTP $status" >&2
     exit 1
     ;;
-esac
+  esac
+done
+echo "$exists"
